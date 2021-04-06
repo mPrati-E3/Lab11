@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import it.polito.tdp.rivers.model.Flow;
+import it.polito.tdp.rivers.model.PrimaMedia;
 import it.polito.tdp.rivers.model.River;
 
 import java.sql.Connection;
@@ -71,5 +72,39 @@ public class RiversDAO {
 		}
 
 		return flows;
+	}
+
+	public PrimaMedia dammiPrimaMedia(River r) {
+		
+		final String sql = "SELECT flow.day AS inizio, AVG(flow.flow) AS media\n"
+				+ "FROM flow\n"
+				+ "WHERE river=?";
+
+		try {
+			
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			
+			st.setInt(1, r.getId());
+			
+			ResultSet res = st.executeQuery();
+
+			while (res.next()) {
+				
+				PrimaMedia pm = new PrimaMedia (res.getDate("inizio"), res.getFloat("media"));
+				
+				conn.close();
+				
+				return pm;
+
+			}
+
+			
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+		return null;
+
 	}
 }

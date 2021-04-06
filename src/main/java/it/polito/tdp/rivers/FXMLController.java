@@ -59,7 +59,7 @@ public class FXMLController {
     	txtStartDate.setText(p.getInizio().toString());
     	txtEndDate.setText(p.getFine().toString());
     	txtNumMeasurements.setText(Integer.toString(p.getN_misurazioni()));
-    	txtStartDate.setText(Float.toString(p.getMedia()));
+    	txtFMed.setText(Float.toString(p.getMedia()));
     	
     }
 

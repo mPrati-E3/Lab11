@@ -41,28 +41,19 @@ public class Model {
 	}
 
 	public Popolatore popolaTxtDatoFiume(River r) {
-		
-		Date inizio=null;
+	
 		Date fine=null;
 		int n=0;
-		float sum = 0.0f;
-		float media=0.0f;
+
 		
 		for(int i=0; i<listFlows.size(); i++) {
 			if (listFlows.get(i).getRiver().getId()==r.getId()) {
-				n++;
-				sum=sum+listFlows.get(i).getFlow();				
-			}
-		}
-		
-		for(int i=0; i<listFlows.size(); i++) {
-			if (listFlows.get(i).getRiver().getId()==r.getId()) {
-				inizio=listFlows.get(i).getDay();
-				break;				
+				n++;			
 			}
 		}
 		
 		
+		//setta la fine del mio popolatore
 		for(int i=listFlows.size()-1; i>=0; i--) {
 			if (listFlows.get(i).getRiver().getId()==r.getId()) {
 				fine=listFlows.get(i).getDay();
@@ -70,10 +61,9 @@ public class Model {
 			}
 		}
 		
+		PrimaMedia pm = dao.dammiPrimaMedia(r);
 		
-		media=sum/n;
-		
-		return new Popolatore(inizio,fine,n,media);
+		return new Popolatore(pm.getPrimo(),fine,n,pm.getMedia());
 	}
 
 	public String Simulatore(River value, String text, String text2, String text3, String text4, String text5) {
