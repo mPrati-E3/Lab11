@@ -1,31 +1,34 @@
 package it.polito.tdp.rivers.model;
 
-import java.time.LocalDate;
+import java.sql.Date;
 
 public class Flow {
-	private LocalDate day;
-	private double flow;
+	
+	private int id;
+	private Date day;
+	private float flow;
 	private River river;
 
-	public Flow(LocalDate day, double flow, River river) {
+	public Flow(int id, Date day, float flow, River river) {
+		this.id=id;
 		this.day = day;
 		this.flow = flow;
 		this.river = river;
 	}
 
-	public LocalDate getDay() {
+	public Date getDay() {
 		return day;
 	}
 
-	public void setDay(LocalDate day) {
+	public void setDay(Date day) {
 		this.day = day;
 	}
 
-	public double getFlow() {
+	public float getFlow() {
 		return flow;
 	}
 
-	public void setFlow(double flow) {
+	public void setFlow(float flow) {
 		this.flow = flow;
 	}
 
@@ -33,6 +36,48 @@ public class Flow {
 	public String toString() {
 		return "Flow [day=" + day + ", flow=" + flow + ", river=" + river + "]";
 	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public River getRiver() {
+		return river;
+	}
+
+	public void setRiver(River river) {
+		this.river = river;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Flow other = (Flow) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
+	
+	
 
 	
 }

@@ -3,12 +3,11 @@ package it.polito.tdp.rivers.db;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import javax.sql.DataSource;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
-
+//semplice classe dedicata alla connessione con il db
 public class DBConnect {
 
 	private static String jdbcURL = "jdbc:mysql://localhost/rivers";
@@ -20,7 +19,7 @@ public class DBConnect {
 			HikariConfig config = new HikariConfig();
 			config.setJdbcUrl(jdbcURL);
 			config.setUsername("root");
-			config.setPassword("");
+			config.setPassword("root");
 			
 			// configurazione MySQL
 			config.addDataSourceProperty("cachePrepStmts", "true");

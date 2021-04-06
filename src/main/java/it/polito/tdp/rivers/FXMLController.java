@@ -8,6 +8,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import it.polito.tdp.rivers.model.Model;
+import it.polito.tdp.rivers.model.Popolatore;
+import it.polito.tdp.rivers.model.River;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -25,7 +28,7 @@ public class FXMLController {
     private URL location;
 
     @FXML // fx:id="boxRiver"
-    private ComboBox<?> boxRiver; // Value injected by FXMLLoader
+    private ComboBox<River> boxRiver; // Value injected by FXMLLoader
 
     @FXML // fx:id="txtStartDate"
     private TextField txtStartDate; // Value injected by FXMLLoader
@@ -47,6 +50,44 @@ public class FXMLController {
 
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
+    
+    @FXML
+    void doScegliFiume(ActionEvent event) {
+    	
+    	Popolatore p = this.model.popolaTxtDatoFiume(boxRiver.getValue());
+    	
+    	txtStartDate.setText(p.getInizio().toString());
+    	txtEndDate.setText(p.getFine().toString());
+    	txtNumMeasurements.setText(Integer.toString(p.getN_misurazioni()));
+    	txtStartDate.setText(Float.toString(p.getMedia()));
+    	
+    }
+
+    @FXML
+    void doSimula(ActionEvent event) {
+    	
+    	String s = "";
+    	
+    	if (boxRiver.getValue()!=null && !txtStartDate.getText().equals("") && 
+    			!txtEndDate.getText().equals("") && !txtNumMeasurements.getText().equals("") &&
+    			!txtFMed.getText().equals("") && !txtK.getText().equals("")) {
+    	
+    		s = this.model.Simulatore(
+    			boxRiver.getValue(),
+    			txtStartDate.getText(),
+    			txtEndDate.getText(),
+    			txtNumMeasurements.getText(),
+    			txtFMed.getText(),
+    			txtK.getText());
+    	} else {
+    		s = "Errore! Inserire tutti i valori nell'interfaccia! \n";
+    	}
+    	
+    	if (!s.equals("")) {
+    		txtResult.appendText(s);
+    	}
+
+    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -62,5 +103,10 @@ public class FXMLController {
     
     public void setModel(Model model) {
     	this.model = model;
+    	
+    	for (River r : this.model.TuttiFiumi()) {
+    		boxRiver.getItems().add(r);
+    	}
+    	
     }
 }
