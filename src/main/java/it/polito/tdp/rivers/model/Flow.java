@@ -2,6 +2,8 @@ package it.polito.tdp.rivers.model;
 
 import java.sql.Date;
 
+//javabean che rappresenta i flussi
+//è più complesso del solito perchè comparabile
 public class Flow implements Comparable<Flow>{
 	
 	private int id;

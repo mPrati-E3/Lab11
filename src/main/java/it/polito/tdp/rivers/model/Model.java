@@ -9,20 +9,26 @@ import it.polito.tdp.rivers.db.RiversDAO;
 
 public class Model {
 	
+	//dichiaro il dao
 	RiversDAO dao;
 	
+	//dichiaro la collezzione di fiumi
 	List<River> listRivers;
 	Map<Integer, River> mapRivers;
 	
+	//dichiaro la collezzione di flussi
 	List<Flow> listFlows;
 	Map<Integer, Flow> mapFlows;
 	
+	//dichiaro il simulatore
 	Simulator sim;
 	
 	public Model() {
 		
+		//definisco il dao
 		this.dao = new RiversDAO();
 		
+		//definisco la collezione di fiumi
 		this.listRivers=dao.getAllRivers();
 		
 		this.mapRivers = new HashMap<Integer, River>();
@@ -30,6 +36,7 @@ public class Model {
 			mapRivers.put(r.getId(), r);
 		}
 		
+		//definisco la collezione di flussi
 		this.listFlows=dao.getAllFlows(mapRivers);
 		
 		this.mapFlows = new HashMap<Integer, Flow>();
@@ -39,16 +46,18 @@ public class Model {
 		
 	}
 	
+	//ritorna tutti i fiumi del database
 	public List<River> TuttiFiumi() {
 		return this.listRivers;
 	}
 
+	//creo il popolatore per il controller
 	public Popolatore popolaTxtDatoFiume(River r) {
 	
 		Date fine=null;
 		int n=0;
 
-		
+		//numero di flows del popolatore
 		for(int i=0; i<listFlows.size(); i++) {
 			if (listFlows.get(i).getRiver().getId()==r.getId()) {
 				n++;			
@@ -64,19 +73,17 @@ public class Model {
 			}
 		}
 		
+		//setta inizio del popolatore e media
 		PrimaMedia pm = dao.dammiPrimaMedia(r);
 		
 		return new Popolatore(pm.getPrimo(),fine,n,pm.getMedia());
 	}
 
+	//dati in input gli elementi del controller, recupero il flow e 
+	//il river che mi servono e chiamo il simulatore
 	public String Simulatore(River R, String Fin, String Fend, int N, float Fmed, float K) {
 		
-		for (Flow f : listFlows) {
-			if (R.getId()==f.getRiver().getId() && Fin.equals(f.getDay().toString())) {
-				sim = new Simulator (K,Fmed,N,f,dao,R);
-				break;
-			}
-		}
+		sim = new Simulator (K,Fmed,dao,R);
 		
 		return sim.run();
 	}

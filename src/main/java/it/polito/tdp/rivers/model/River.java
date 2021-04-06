@@ -1,6 +1,6 @@
 package it.polito.tdp.rivers.model;
 
-
+//javabean che descrive i fiumi
 public class River {
 	
 	private int id;

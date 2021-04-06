@@ -2,6 +2,7 @@ package it.polito.tdp.rivers.model;
 
 import java.sql.Date;
 
+//javabean di supporto che contiene una data di primo flow di un river e la media del flow
 public class PrimaMedia {
 	
 	Date primo;

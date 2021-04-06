@@ -16,6 +16,7 @@ import java.sql.SQLException;
 
 public class RiversDAO {
 
+	//mi restituisce tutti i fiumi del db
 	public List<River> getAllRivers() {
 		
 		final String sql = "SELECT id, name FROM river";
@@ -41,6 +42,7 @@ public class RiversDAO {
 		return rivers;
 	}
 
+	//mi restituisce tutti i flussi del db
 	public List<Flow> getAllFlows(Map<Integer, River> map) {
 		
 		final String sql = "SELECT id,day,flow,river FROM flow";
@@ -77,6 +79,7 @@ public class RiversDAO {
 		return flows;
 	}
 	
+	//mi restituisce tutti i flussi per un fiume del db
 	public List<Flow> getAllFlowsOfRiver(River r) {
 		
 		final String sql = "SELECT id,day,flow,river FROM flow WHERE river=?";
@@ -114,6 +117,7 @@ public class RiversDAO {
 		return flows;
 	}
 
+	//mi restituisce la data del primo flow e la media di flow di un river
 	public PrimaMedia dammiPrimaMedia(River r) {
 		
 		final String sql = "SELECT flow.day AS inizio, AVG(flow.flow) AS media\n"

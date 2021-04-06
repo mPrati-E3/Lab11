@@ -51,6 +51,7 @@ public class FXMLController {
     @FXML // fx:id="txtResult"
     private TextArea txtResult; // Value injected by FXMLLoader
     
+    //dato un fiume nella box, popolo le textfield interrogando il model
     @FXML
     void doScegliFiume(ActionEvent event) {
     	
@@ -63,6 +64,8 @@ public class FXMLController {
     	
     }
 
+    //con i dati popolati prima, chiamo il model che chiamerà il simulatore per darmi i dati richiesti
+    //tutti i campi vengono controllati
     @FXML
     void doSimula(ActionEvent event) {
     	
@@ -114,6 +117,7 @@ public class FXMLController {
     public void setModel(Model model) {
     	this.model = model;
     	
+    	//riempio il box con i river
     	for (River r : this.model.TuttiFiumi()) {
     		boxRiver.getItems().add(r);
     	}

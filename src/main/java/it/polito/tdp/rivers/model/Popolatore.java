@@ -2,6 +2,7 @@ package it.polito.tdp.rivers.model;
 
 import java.util.Date;
 
+//javabean che serve per popolare correttamente le textfield nel controller
 public class Popolatore {
 	
 	private Date inizio;
