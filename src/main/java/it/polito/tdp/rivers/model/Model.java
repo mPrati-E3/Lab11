@@ -17,6 +17,8 @@ public class Model {
 	List<Flow> listFlows;
 	Map<Integer, Flow> mapFlows;
 	
+	Simulator sim;
+	
 	public Model() {
 		
 		this.dao = new RiversDAO();
@@ -34,6 +36,7 @@ public class Model {
 		for (Flow f : listFlows) {
 			mapFlows.put(f.getId(), f);
 		}
+		
 	}
 	
 	public List<River> TuttiFiumi() {
@@ -66,9 +69,16 @@ public class Model {
 		return new Popolatore(pm.getPrimo(),fine,n,pm.getMedia());
 	}
 
-	public String Simulatore(River value, String text, String text2, String text3, String text4, String text5) {
-		// TODO Auto-generated method stub
-		return null;
+	public String Simulatore(River R, String Fin, String Fend, int N, float Fmed, float K) {
+		
+		for (Flow f : listFlows) {
+			if (R.getId()==f.getRiver().getId() && Fin.equals(f.getDay().toString())) {
+				sim = new Simulator (K,Fmed,N,f,dao,R);
+				break;
+			}
+		}
+		
+		return sim.run();
 	}
 
 }

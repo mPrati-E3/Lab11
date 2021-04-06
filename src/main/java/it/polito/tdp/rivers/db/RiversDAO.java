@@ -1,5 +1,6 @@
 package it.polito.tdp.rivers.db;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class RiversDAO {
 
 	public List<Flow> getAllFlows(Map<Integer, River> map) {
 		
-		final String sql = "SELECT id,day,flow,river  FROM flow";
+		final String sql = "SELECT id,day,flow,river FROM flow";
 
 		List<Flow> flows = new LinkedList<Flow>();
 
@@ -70,6 +71,45 @@ public class RiversDAO {
 			//e.printStackTrace();
 			throw new RuntimeException("SQL Error");
 		}
+		
+		Collections.sort(flows);
+
+		return flows;
+	}
+	
+	public List<Flow> getAllFlowsOfRiver(River r) {
+		
+		final String sql = "SELECT id,day,flow,river FROM flow WHERE river=?";
+
+		List<Flow> flows = new LinkedList<Flow>();
+
+		try {
+			Connection conn = DBConnect.getConnection();
+			PreparedStatement st = conn.prepareStatement(sql);
+			
+			st.setInt(1, r.getId());
+			
+			ResultSet res = st.executeQuery();
+
+			while (res.next()) {
+				
+				Flow f = new Flow(
+						res.getInt("id"),
+						res.getDate("day"),
+						res.getFloat("flow"),
+						r);
+				
+				flows.add(f);
+			}
+
+			conn.close();
+			
+		} catch (SQLException e) {
+			//e.printStackTrace();
+			throw new RuntimeException("SQL Error");
+		}
+		
+		Collections.sort(flows);
 
 		return flows;
 	}

@@ -2,7 +2,7 @@ package it.polito.tdp.rivers.model;
 
 import java.sql.Date;
 
-public class Flow {
+public class Flow implements Comparable<Flow>{
 	
 	private int id;
 	private Date day;
@@ -73,6 +73,11 @@ public class Flow {
 		if (id != other.id)
 			return false;
 		return true;
+	}
+
+	@Override
+	public int compareTo(Flow o) {
+		return this.day.compareTo(o.getDay());
 	}
 	
 	

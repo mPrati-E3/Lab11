@@ -66,27 +66,37 @@ public class FXMLController {
     @FXML
     void doSimula(ActionEvent event) {
     	
-    	String s = "";
+    	txtResult.clear();
     	
-    	if (boxRiver.getValue()!=null && !txtStartDate.getText().equals("") && 
-    			!txtEndDate.getText().equals("") && !txtNumMeasurements.getText().equals("") &&
-    			!txtFMed.getText().equals("") && !txtK.getText().equals("")) {
+    	if (txtStartDate.getText().equals("") || txtEndDate.getText().equals("") || 
+    			txtNumMeasurements.getText().equals("") || txtFMed.getText().equals("")) {
+    		txtResult.appendText("Si prega di scegliere un fiume! \n");
+    		return;
+    	}
     	
-    		s = this.model.Simulatore(
+    	if (txtK.getText().equals("")) {
+    		txtResult.appendText("Il coefficiente K non può essere nullo! \n");
+    		return;
+    	}
+    	
+    	float k = 0.0f;
+    	try {
+    		k = Float.parseFloat(txtK.getText());
+    	} catch (NumberFormatException e) {
+    		txtResult.appendText("Il coefficiente K deve essere numerico e positivo! \n");
+    		return;
+    	}
+    	
+    	
+    	txtResult.appendText(this.model.Simulatore(
     			boxRiver.getValue(),
-    			txtStartDate.getText(),
-    			txtEndDate.getText(),
-    			txtNumMeasurements.getText(),
-    			txtFMed.getText(),
-    			txtK.getText());
-    	} else {
-    		s = "Errore! Inserire tutti i valori nell'interfaccia! \n";
-    	}
+    			txtStartDate.getText(), 
+    			txtEndDate.getText(), 
+    			Integer.parseInt(txtNumMeasurements.getText()), 
+    			Float.parseFloat(txtFMed.getText()), 
+    			k));
     	
-    	if (!s.equals("")) {
-    		txtResult.appendText(s);
-    	}
-
+    
     }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
